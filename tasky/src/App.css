@@ -12,7 +12,7 @@ div {
   padding: 20px;
 }
 
-.container{
+.container {
   text-align: center;
 }
 
@@ -32,11 +32,16 @@ div {
 
 .title {
   font-weight: bold;
-  font-size: 1.2em; 
+  font-size: 1.2em;
 }
 
 .content {
   font-style: italic;
+}
+
+.priority{
+  font-size: larger;
+  font-weight: bold;
 }
 
 button {
@@ -63,7 +68,8 @@ button {
   color: red;
 }
 
-input[type=text], input[type=date] {
+/* Apply the same style to text inputs, date inputs, and the select dropdown */
+input[type=text], input[type=date], select {
   width: 60%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -92,4 +98,15 @@ form {
   text-align: left;
   width: 50%;
   margin: auto;
+}
+
+.priorityButton {
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  padding: 5px 10px;
+  margin: 10px 0; 
+  cursor: not-allowed; 
+  width: 100%; 
+  transition: background-color 0.3s; 
 }

@@ -8,17 +8,54 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [ taskState, setTaskState ] = useState({
     tasks: [
-      { id: 1, title:"Dishes", description: "Empty dishwasher", deadline: "Today", done: false },
-      { id: 2, title: "Laundry", description: "Fold clothes and put away", deadline: "Tomorrow", done: false },
-      { id: 3, title: "Tidy up", deadline: "Today", done: false}
+      { id: 1, title:"Dishes", description:"Empty dishwasher", deadline: "Today", priority:"Low",done: false },
+      { id: 2, title: "Laundry", description:"Fold clothes and put away", deadline: "Tomorrow",priority:"Medium", done: false },
+      { id: 3, title: "Tidy up",deadline: "Today", priority:"High",done: false}
     ]
   });
 
   const [ formState, setFormState ] = useState({
     title: "",
     description: "",
-    deadline: ""
+    deadline: "",
+    priority:""
   });
+
+  const Task = (props) => {
+    let priorityColor;
+
+    // 根据优先级设置颜色
+    switch (props.priority.toLowerCase()) {
+        case 'low':
+            priorityColor = 'green';
+            break;
+        case 'medium':
+            priorityColor = 'orange';
+            break;
+        case 'high':
+            priorityColor = 'red';
+            break;
+        default:
+            priorityColor = 'grey'; 
+    }
+
+    return (
+        <div className="card" style={{ backgroundColor: props.done ? 'lightgrey' : '#5bb4c4' }}>
+            <p className="title">{props.title}</p>
+            <p>Due: {props.deadline}</p>
+            <p className="content">{props.description}</p>
+            <button 
+                className="priorityButton" 
+                style={{ backgroundColor: priorityColor, color: 'white' }}
+                disabled 
+            >
+                {props.priority.charAt(0).toUpperCase() + props.priority.slice(1)}
+            </button>
+            <button onClick={props.markDone} className='doneButton'>Done</button>
+            <button className='deleteButton' onClick={props.deleteTask}>Delete</button>
+        </div>
+    );
+}
 
   const doneHandler = (taskIndex) => {
     const tasks = [...taskState.tasks];
@@ -44,6 +81,9 @@ function App() {
           break;
       case "deadline":
           form.deadline = event.target.value;
+          break;
+      case "priority":
+          form.priority = event.target.value;
           break;
       default:
           form = formState;
@@ -73,6 +113,7 @@ function App() {
         title={task.title}
         description={task.description}
         deadline={task.deadline}
+        priority={task.priority}
         key={task.id}
         done={task.done}
         markDone={() => doneHandler(index)}
